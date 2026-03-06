@@ -107,6 +107,7 @@ function DashboardContent() {
         businessCustomerId: customer.id,
         customerName: customer.customers.name,
         customerEmail: customer.customers.email,
+        customerPhone: customer.customers.phone,
         businessName: business.name,
         businessId: business.id,
       }),

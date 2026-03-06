@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { sendSMS } from '@/lib/twilio'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -51,7 +52,7 @@ export async function POST(req) {
     // Get business details
     const { data: business } = await supabase
       .from('businesses')
-      .select('google_review_url')
+      .select('google_review_url, plan')
       .eq('id', businessId)
       .single()
 
@@ -117,6 +118,25 @@ console.log('Resend API key exists:', !!process.env.RESEND_API_KEY)
       type: 'checkin_thankyou',
       status: 'sent',
     })
+
+    // Send SMS if phone provided and plan supports it
+    const smsPlans = ['growth', 'pro']
+    if (phone && smsPlans.includes(business?.plan)) {
+      try {
+        await sendSMS(
+          phone,
+          `Hi ${name}! Thanks for visiting ${businessName}! We'd love a quick Google review: ${reviewUrl} - ${businessName}`
+        )
+        await supabase.from('sms_log').insert({
+          customer_id: bcData.id,
+          business_id: businessId,
+          type: 'checkin_thankyou',
+          status: 'sent',
+        })
+      } catch (smsErr) {
+        console.error('SMS error (check-in):', smsErr)
+      }
+    }
 
     return Response.json({ success: true })
 

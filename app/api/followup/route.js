@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { sendSMS } from '@/lib/twilio'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -10,7 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req) {
   try {
-    const { businessCustomerId, customerName, customerEmail, businessName, businessId } = await req.json()
+    const { businessCustomerId, customerName, customerEmail, customerPhone, businessName, businessId } = await req.json()
 
     if (!customerEmail || !customerName || !businessName) {
       return Response.json({ error: 'Missing required fields' }, { status: 400 })
@@ -19,7 +20,7 @@ export async function POST(req) {
     // Get business details for review URL
     const { data: business } = await supabase
       .from('businesses')
-      .select('google_review_url')
+      .select('google_review_url, plan')
       .eq('id', businessId)
       .single()
 
@@ -83,6 +84,25 @@ export async function POST(req) {
       type: 'followup',
       status: 'sent',
     })
+
+    // Send SMS if phone available and plan supports it
+    const smsPlans = ['growth', 'pro']
+    if (customerPhone && smsPlans.includes(business?.plan)) {
+      try {
+        await sendSMS(
+          customerPhone,
+          `Hi ${customerName}, thanks for visiting ${businessName}! We'd love your feedback: ${reviewUrl}`
+        )
+        await supabase.from('sms_log').insert({
+          customer_id: businessCustomerId,
+          business_id: businessId,
+          type: 'followup',
+          status: 'sent',
+        })
+      } catch (smsErr) {
+        console.error('SMS error (follow-up):', smsErr)
+      }
+    }
 
     return Response.json({ success: true })
 

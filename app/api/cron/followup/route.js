@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { sendSMS } from '@/lib/twilio'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -14,13 +15,14 @@ export async function GET(req) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const results = { sent30day: 0, sent60day: 0, errors: [] }
+  const results = { sent30day: 0, sent60day: 0, sms30day: 0, sms60day: 0, errors: [] }
+  const smsPlans = ['growth', 'pro']
 
   try {
     // ── 30-DAY RE-ENGAGEMENT ──────────────────────────────
     const { data: customers30 } = await supabase
       .from('business_customers')
-      .select('*, customers(name, email), businesses(name, google_review_url, website_url, contact_phone)')
+      .select('*, customers(name, email, phone), businesses(name, google_review_url, website_url, contact_phone, plan)')
       .eq('followup_sent', true)
       .eq('rebook_sent', false)
       .lte('last_visit', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0])
@@ -51,6 +53,26 @@ export async function GET(req) {
         })
 
         results.sent30day++
+
+        // Send SMS if phone available and plan supports it
+        if (bc.customers?.phone && smsPlans.includes(bc.businesses?.plan)) {
+          try {
+            const ctaUrl = bc.businesses?.website_url || bc.businesses?.google_review_url || ''
+            await sendSMS(
+              bc.customers.phone,
+              `Hi ${bc.customers.name}, we miss you at ${bc.businesses?.name}! Book your next visit: ${ctaUrl}`
+            )
+            await supabase.from('sms_log').insert({
+              customer_id: bc.id,
+              business_id: bc.business_id,
+              type: 'rebook_30day',
+              status: 'sent',
+            })
+            results.sms30day++
+          } catch (smsErr) {
+            results.errors.push(`30day SMS - ${bc.customers.phone}: ${smsErr.message}`)
+          }
+        }
       } catch (err) {
         results.errors.push(`30day - ${bc.customers.email}: ${err.message}`)
       }
@@ -59,7 +81,7 @@ export async function GET(req) {
     // ── 60-DAY RE-ENGAGEMENT ──────────────────────────────
     const { data: customers60 } = await supabase
       .from('business_customers')
-      .select('*, customers(name, email), businesses(name, google_review_url, website_url, contact_phone)')
+      .select('*, customers(name, email, phone), businesses(name, google_review_url, website_url, contact_phone, plan)')
       .eq('followup_sent', true)
       .eq('rebook_sent', true)
       .lte('last_visit', new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0])
@@ -85,6 +107,26 @@ export async function GET(req) {
         })
 
         results.sent60day++
+
+        // Send SMS if phone available and plan supports it
+        if (bc.customers?.phone && smsPlans.includes(bc.businesses?.plan)) {
+          try {
+            const ctaUrl = bc.businesses?.website_url || bc.businesses?.google_review_url || ''
+            await sendSMS(
+              bc.customers.phone,
+              `Hi ${bc.customers.name}, it's been a while! Come back to ${bc.businesses?.name}: ${ctaUrl}`
+            )
+            await supabase.from('sms_log').insert({
+              customer_id: bc.id,
+              business_id: bc.business_id,
+              type: 'rebook_60day',
+              status: 'sent',
+            })
+            results.sms60day++
+          } catch (smsErr) {
+            results.errors.push(`60day SMS - ${bc.customers.phone}: ${smsErr.message}`)
+          }
+        }
       } catch (err) {
         results.errors.push(`60day - ${bc.customers.email}: ${err.message}`)
       }

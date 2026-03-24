@@ -135,7 +135,7 @@ function PricingContent() {
     const action = getPlanAction(planKey)
     switch (action) {
       case 'current':   return { label: 'Current Plan', color: '#8888aa', bg: 'rgba(136,136,170,0.1)' }
-      case 'upgrade':   return { label: '⬆ Upgrade', color: '#00e5a0', bg: 'rgba(0,229,160,0.1)' }
+      case 'upgrade':   return { label: '⬆ Upgrade', color: '#f97316', bg: 'rgba(249,115,22,0.1)' }
       case 'downgrade': return { label: '⬇ Downgrade', color: '#ffd166', bg: 'rgba(255,209,102,0.1)' }
       default:          return null
     }
@@ -227,7 +227,7 @@ function PricingContent() {
                 <ul style={s.features}>
                   {plan.features.map(f => (
                     <li key={f} style={s.feature}>
-                      <span style={{ ...s.check, color: isCurrent ? '#8888aa' : '#00e5a0' }}>✓</span>
+                      <span style={{ ...s.check, color: isCurrent ? 'var(--muted)' : '#f97316' }}>✓</span>
                       <span style={s.featureText}>{f}</span>
                     </li>
                   ))}
@@ -267,57 +267,57 @@ function PricingContent() {
 }
 
 const s = {
-  page: { minHeight: '100vh', background: '#0a0a0f', fontFamily: "'DM Sans', sans-serif", position: 'relative', overflow: 'hidden' },
-  loadingPage: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0a0f' },
-  spinner: { width: 36, height: 36, border: '3px solid rgba(255,255,255,0.1)', borderTop: '3px solid #00e5a0', borderRadius: '50%', animation: 'spin 0.8s linear infinite' },
-  orb1: { position: 'fixed', width: 500, height: 500, borderRadius: '50%', background: '#7c6cff', filter: 'blur(140px)', opacity: 0.1, top: -150, right: -100, pointerEvents: 'none' },
-  orb2: { position: 'fixed', width: 400, height: 400, borderRadius: '50%', background: '#00e5a0', filter: 'blur(140px)', opacity: 0.08, bottom: -100, left: -100, pointerEvents: 'none' },
-  nav: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 40px', borderBottom: '1px solid rgba(255,255,255,0.07)', position: 'relative', zIndex: 1 },
-  logo: { fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '1.4rem', color: '#f0f0f8', textDecoration: 'none', letterSpacing: '-0.5px' },
-  logoAccent: { color: '#00e5a0' },
-  backLink: { color: '#8888aa', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 },
+  page: { minHeight: '100vh', background: 'var(--bg)', fontFamily: "'DM Sans', sans-serif", position: 'relative', overflow: 'hidden' },
+  loadingPage: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)' },
+  spinner: { width: 36, height: 36, border: '3px solid var(--spinner-border)', borderTop: '3px solid #f97316', borderRadius: '50%', animation: 'spin 0.8s linear infinite' },
+  orb1: { position: 'fixed', width: 500, height: 500, borderRadius: '50%', background: '#fbbf24', filter: 'blur(140px)', opacity: 0.1, top: -150, right: -100, pointerEvents: 'none' },
+  orb2: { position: 'fixed', width: 400, height: 400, borderRadius: '50%', background: '#f97316', filter: 'blur(140px)', opacity: 0.08, bottom: -100, left: -100, pointerEvents: 'none' },
+  nav: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 40px', borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 1 },
+  logo: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.4rem', color: 'var(--text)', textDecoration: 'none', letterSpacing: '-0.5px' },
+  logoAccent: { color: '#f97316' },
+  backLink: { color: 'var(--muted)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 },
   content: { maxWidth: 1000, margin: '0 auto', padding: '60px 24px', position: 'relative', zIndex: 1 },
   header: { textAlign: 'center', marginBottom: 52 },
-  badge: { display: 'inline-block', background: 'rgba(0,229,160,0.1)', border: '1px solid rgba(0,229,160,0.25)', color: '#00e5a0', padding: '6px 18px', borderRadius: 100, fontSize: '0.82rem', fontWeight: 700, marginBottom: 20, textTransform: 'uppercase', letterSpacing: '0.5px' },
-  title: { fontFamily: "'Syne', sans-serif", fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#f0f0f8', letterSpacing: '-1px', marginBottom: 16 },
-  subtitle: { color: '#8888aa', fontSize: '1rem', maxWidth: 520, margin: '0 auto', lineHeight: 1.7 },
+  badge: { display: 'inline-block', background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.25)', color: '#f97316', padding: '6px 18px', borderRadius: 100, fontSize: '0.82rem', fontWeight: 700, marginBottom: 20, textTransform: 'uppercase', letterSpacing: '0.5px' },
+  title: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-1px', marginBottom: 16 },
+  subtitle: { color: 'var(--muted)', fontSize: '1rem', maxWidth: 520, margin: '0 auto', lineHeight: 1.7 },
   errorBox: { background: 'rgba(255,80,80,0.1)', border: '1px solid rgba(255,80,80,0.25)', color: '#ff8080', borderRadius: 12, padding: '14px 20px', fontSize: '0.88rem', marginBottom: 24, textAlign: 'center' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginBottom: 40 },
-  card: { background: '#13131a', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 24, padding: '32px', position: 'relative', transition: 'transform 0.2s' },
-  cardFeatured: { background: 'linear-gradient(135deg, rgba(0,229,160,0.06) 0%, rgba(124,108,255,0.06) 100%)', border: '1px solid rgba(0,229,160,0.25)' },
-  cardCurrent: { background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', opacity: 0.8 },
+  card: { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 24, padding: '32px', position: 'relative', transition: 'transform 0.2s' },
+  cardFeatured: { background: 'linear-gradient(135deg, rgba(249,115,22,0.06) 0%, rgba(251,191,36,0.06) 100%)', border: '1px solid rgba(249,115,22,0.25)' },
+  cardCurrent: { background: 'var(--surface-hover)', border: '1px solid var(--border-subtle)', opacity: 0.8 },
   cardTopRow: { display: 'flex', justifyContent: 'flex-end', marginBottom: 16, minHeight: 24 },
-  popularBadge: { background: '#00e5a0', color: '#000', padding: '3px 12px', borderRadius: 100, fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' },
+  popularBadge: { background: '#f97316', color: '#000', padding: '3px 12px', borderRadius: 100, fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' },
   actionBadge: { padding: '3px 12px', borderRadius: 100, fontSize: '0.72rem', fontWeight: 700 },
-  planName: { fontFamily: "'Syne', sans-serif", fontSize: '0.85rem', fontWeight: 700, color: '#8888aa', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 },
-  planDesc: { color: '#8888aa', fontSize: '0.85rem', marginBottom: 24 },
+  planName: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '0.85rem', fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 },
+  planDesc: { color: 'var(--muted)', fontSize: '0.85rem', marginBottom: 24 },
   priceWrap: { marginBottom: 28 },
-  originalPrice: { color: '#8888aa', fontSize: '0.9rem', textDecoration: 'line-through', marginBottom: 4 },
-  launchPrice: { fontFamily: "'Syne', sans-serif", fontSize: '2.8rem', fontWeight: 800, color: '#f0f0f8', letterSpacing: '-1px', lineHeight: 1 },
+  originalPrice: { color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'line-through', marginBottom: 4 },
+  launchPrice: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '2.8rem', fontWeight: 800, color: 'var(--text)', letterSpacing: '-1px', lineHeight: 1 },
   currency: { fontSize: '1.2rem', verticalAlign: 'top', marginTop: 8, display: 'inline-block' },
-  period: { fontSize: '1rem', color: '#8888aa', fontWeight: 400 },
-  priceNote: { color: '#8888aa', fontSize: '0.78rem', marginTop: 6 },
+  period: { fontSize: '1rem', color: 'var(--muted)', fontWeight: 400 },
+  priceNote: { color: 'var(--muted)', fontSize: '0.78rem', marginTop: 6 },
   features: { listStyle: 'none', marginBottom: 28 },
-  feature: { display: 'flex', alignItems: 'flex-start', gap: 10, padding: '7px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.88rem' },
+  feature: { display: 'flex', alignItems: 'flex-start', gap: 10, padding: '7px 0', borderBottom: '1px solid var(--border-subtle)', fontSize: '0.88rem' },
   check: { fontWeight: 700, flexShrink: 0 },
-  featureText: { color: '#8888aa' },
+  featureText: { color: 'var(--muted)' },
   btn: { width: '100%', padding: '14px', borderRadius: 12, fontWeight: 700, fontSize: '0.88rem', cursor: 'pointer', border: 'none', fontFamily: "'DM Sans', sans-serif", transition: 'all 0.2s', marginBottom: 10 },
-  btnFeatured: { background: '#00e5a0', color: '#000' },
-  btnOutline: { background: 'transparent', color: '#f0f0f8', border: '1px solid rgba(255,255,255,0.12)' },
-  btnCurrent: { background: 'rgba(255,255,255,0.04)', color: '#8888aa', border: '1px solid rgba(255,255,255,0.07)', cursor: 'default' },
+  btnFeatured: { background: '#f97316', color: '#000' },
+  btnOutline: { background: 'transparent', color: 'var(--text)', border: '1px solid var(--border-medium)' },
+  btnCurrent: { background: 'var(--surface-hover)', color: 'var(--muted)', border: '1px solid var(--border)', cursor: 'default' },
   btnDisabled: { opacity: 0.6, cursor: 'not-allowed' },
-  cardNote: { textAlign: 'center', color: '#8888aa', fontSize: '0.75rem' },
-  trust: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24, padding: '24px 0', borderTop: '1px solid rgba(255,255,255,0.07)' },
-  trustItem: { color: '#8888aa', fontSize: '0.85rem', fontWeight: 500 },
+  cardNote: { textAlign: 'center', color: 'var(--muted)', fontSize: '0.75rem' },
+  trust: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24, padding: '24px 0', borderTop: '1px solid var(--border)' },
+  trustItem: { color: 'var(--muted)', fontSize: '0.85rem', fontWeight: 500 },
 }
 
 export default function PricingPage() {
   return (
     <Suspense fallback={
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', 
-        justifyContent: 'center', background: '#0a0a0f' }}>
-        <div style={{ width: 36, height: 36, border: '3px solid rgba(255,255,255,0.1)', 
-          borderTop: '3px solid #00e5a0', borderRadius: '50%' }} />
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center',
+        justifyContent: 'center', background: 'var(--bg)' }}>
+        <div style={{ width: 36, height: 36, border: '3px solid var(--spinner-border)',
+          borderTop: '3px solid #f97316', borderRadius: '50%' }} />
       </div>
     }>
       <PricingContent />

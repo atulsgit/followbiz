@@ -81,8 +81,8 @@ const serviceOptions = {
   // LOADING
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: 40, height: 40, border: '3px solid rgba(255,255,255,0.1)', borderTop: '3px solid #00e5a0', borderRadius: '50%' }} />
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: 40, height: 40, border: '3px solid var(--spinner-border)', borderTop: '3px solid #f97316', borderRadius: '50%' }} />
       </div>
     )
   }
@@ -90,11 +90,11 @@ const serviceOptions = {
   // NOT FOUND
   if (notFound) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', textAlign: 'center', padding: 24 }}>
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'DM Sans', sans-serif", textAlign: 'center', padding: 24 }}>
         <div>
           <div style={{ fontSize: '3rem', marginBottom: 16 }}>🔍</div>
-          <h2 style={{ color: '#f0f0f8', fontSize: '1.5rem', marginBottom: 8 }}>Business Not Found</h2>
-          <p style={{ color: '#8888aa' }}>This check-in link doesn't exist or has been deactivated.</p>
+          <h2 style={{ color: 'var(--text)', fontSize: '1.5rem', marginBottom: 8 }}>Business Not Found</h2>
+          <p style={{ color: 'var(--muted)' }}>This check-in link doesn't exist or has been deactivated.</p>
         </div>
       </div>
     )
@@ -103,19 +103,19 @@ const serviceOptions = {
   // SUCCESS
   if (submitted) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', padding: 24 }}>
-        <div style={{ background: '#13131a', border: '1px solid rgba(0,229,160,0.2)', borderRadius: 24, padding: '48px 40px', maxWidth: 440, width: '100%', textAlign: 'center' }}>
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'DM Sans', sans-serif", padding: 24 }}>
+        <div style={{ background: 'var(--surface)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: 24, padding: '48px 40px', maxWidth: 440, width: '100%', textAlign: 'center' }}>
           <div style={{ fontSize: '3rem', marginBottom: 16 }}>🎉</div>
-          <h2 style={{ color: '#f0f0f8', fontFamily: 'sans-serif', fontSize: '1.8rem', fontWeight: 800, marginBottom: 12 }}>Thank You!</h2>
-          <p style={{ color: '#8888aa', lineHeight: 1.7, marginBottom: 12 }}>
-            Thanks for checking in at <strong style={{ color: '#00e5a0' }}>{business.name}</strong>!
+          <h2 style={{ color: 'var(--text)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.8rem', fontWeight: 800, marginBottom: 12 }}>Thank You!</h2>
+          <p style={{ color: 'var(--muted)', lineHeight: 1.7, marginBottom: 12 }}>
+            Thanks for checking in at <strong style={{ color: '#f97316' }}>{business.name}</strong>!
           </p>
-          <p style={{ color: '#8888aa', fontSize: '0.9rem', marginBottom: 28 }}>
+          <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 28 }}>
             We'll be in touch soon with something special for you 😊
           </p>
           {business.google_review_url && (
             <a href={business.google_review_url} target="_blank" rel="noopener noreferrer"
-              style={{ display: 'inline-block', background: '#00e5a0', color: '#000', padding: '14px 28px', borderRadius: 100, fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none' }}>
+              style={{ display: 'inline-block', background: '#f97316', color: '#000', padding: '14px 28px', borderRadius: 100, fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none' }}>
               ⭐ Leave Us a Google Review
             </a>
           )}
@@ -126,23 +126,23 @@ const serviceOptions = {
 
   // FORM
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, fontFamily: 'sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, fontFamily: "'DM Sans', sans-serif" }}>
 
       {/* Background orbs */}
-      <div style={{ position: 'fixed', width: 400, height: 400, borderRadius: '50%', background: '#7c6cff', filter: 'blur(140px)', opacity: 0.1, top: -100, right: -100, pointerEvents: 'none' }} />
-      <div style={{ position: 'fixed', width: 350, height: 350, borderRadius: '50%', background: '#00e5a0', filter: 'blur(140px)', opacity: 0.08, bottom: -100, left: -100, pointerEvents: 'none' }} />
+      <div style={{ position: 'fixed', width: 400, height: 400, borderRadius: '50%', background: '#fbbf24', filter: 'blur(140px)', opacity: 0.1, top: -100, right: -100, pointerEvents: 'none' }} />
+      <div style={{ position: 'fixed', width: 350, height: 350, borderRadius: '50%', background: '#f97316', filter: 'blur(140px)', opacity: 0.08, bottom: -100, left: -100, pointerEvents: 'none' }} />
 
-      <div style={{ background: '#13131a', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 24, padding: '40px 36px', width: '100%', maxWidth: 460, position: 'relative', zIndex: 1, boxShadow: '0 40px 100px rgba(0,0,0,0.5)' }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 24, padding: '40px 36px', width: '100%', maxWidth: 460, position: 'relative', zIndex: 1, boxShadow: '0 40px 100px rgba(0,0,0,0.5)' }}>
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ width: 64, height: 64, background: 'linear-gradient(135deg, #00e5a0, #7c6cff)', borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', fontWeight: 800, color: '#000', margin: '0 auto 16px' }}>
+          <div style={{ width: 64, height: 64, background: 'linear-gradient(135deg, #f97316, #fbbf24)', borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', fontWeight: 800, color: '#000', margin: '0 auto 16px' }}>
             {business.name.charAt(0).toUpperCase()}
           </div>
-          <h1 style={{ color: '#f0f0f8', fontSize: '1.5rem', fontWeight: 800, marginBottom: 8 }}>
+          <h1 style={{ color: 'var(--text)', fontSize: '1.5rem', fontWeight: 800, marginBottom: 8 }}>
             {business.name}
           </h1>
-          <p style={{ color: '#8888aa', fontSize: '0.9rem', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.6 }}>
             Join our VIP list and get exclusive offers & updates!
           </p>
         </div>
@@ -151,9 +151,9 @@ const serviceOptions = {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <label style={{ color: '#f0f0f8', fontSize: '0.82rem', fontWeight: 600 }}>Full Name *</label>
+            <label style={{ color: 'var(--text)', fontSize: '0.82rem', fontWeight: 600 }}>Full Name *</label>
             <input
-              style={{ background: '#1c1c28', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, color: '#f0f0f8', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
+              style={{ background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
               value={form.name}
               onChange={e => setForm({ ...form, name: e.target.value })}
               placeholder="Your full name"
@@ -162,10 +162,10 @@ const serviceOptions = {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <label style={{ color: '#f0f0f8', fontSize: '0.82rem', fontWeight: 600 }}>Email Address *</label>
+            <label style={{ color: 'var(--text)', fontSize: '0.82rem', fontWeight: 600 }}>Email Address *</label>
             <input
               type="email"
-              style={{ background: '#1c1c28', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, color: '#f0f0f8', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
+              style={{ background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
               value={form.email}
               onChange={e => setForm({ ...form, email: e.target.value })}
               placeholder="your@email.com"
@@ -174,10 +174,10 @@ const serviceOptions = {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <label style={{ color: '#f0f0f8', fontSize: '0.82rem', fontWeight: 600 }}>Phone Number</label>
+            <label style={{ color: 'var(--text)', fontSize: '0.82rem', fontWeight: 600 }}>Phone Number</label>
             <input
               type="tel"
-              style={{ background: '#1c1c28', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, color: '#f0f0f8', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
+              style={{ background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%', boxSizing: 'border-box' }}
               value={form.phone}
               onChange={e => setForm({ ...form, phone: e.target.value })}
               placeholder="(555) 000-0000"
@@ -185,9 +185,9 @@ const serviceOptions = {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <label style={{ color: '#f0f0f8', fontSize: '0.82rem', fontWeight: 600 }}>Service Today</label>
+            <label style={{ color: 'var(--text)', fontSize: '0.82rem', fontWeight: 600 }}>Service Today</label>
             <select
-              style={{ background: '#1c1c28', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, color: '#f0f0f8', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%' }}
+              style={{ background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%' }}
               value={form.service}
               onChange={e => setForm({ ...form, service: e.target.value })}
             >
@@ -197,9 +197,9 @@ const serviceOptions = {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <label style={{ color: '#f0f0f8', fontSize: '0.82rem', fontWeight: 600 }}>How did you hear about us?</label>
+            <label style={{ color: 'var(--text)', fontSize: '0.82rem', fontWeight: 600 }}>How did you hear about us?</label>
             <select
-              style={{ background: '#1c1c28', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, color: '#f0f0f8', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%' }}
+              style={{ background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', padding: '13px 16px', fontSize: '0.95rem', outline: 'none', width: '100%' }}
               value={form.referral}
               onChange={e => setForm({ ...form, referral: e.target.value })}
             >
@@ -218,18 +218,18 @@ const serviceOptions = {
           <button
             type="submit"
             disabled={submitting}
-            style={{ background: submitting ? '#8888aa' : '#00e5a0', color: '#000', border: 'none', borderRadius: 12, padding: '15px', fontWeight: 700, fontSize: '1rem', cursor: submitting ? 'not-allowed' : 'pointer', marginTop: 8 }}
+            style={{ background: submitting ? 'var(--muted)' : '#f97316', color: '#000', border: 'none', borderRadius: 12, padding: '15px', fontWeight: 700, fontSize: '1rem', cursor: submitting ? 'not-allowed' : 'pointer', marginTop: 8 }}
           >
             {submitting ? 'Checking in...' : 'Check In →'}
           </button>
 
-          <p style={{ color: '#8888aa', fontSize: '0.75rem', textAlign: 'center', lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--muted)', fontSize: '0.75rem', textAlign: 'center', lineHeight: 1.6 }}>
             🔒 Your details are safe with us. Unsubscribe anytime.
           </p>
         </form>
 
-        <div style={{ textAlign: 'center', color: '#8888aa', fontSize: '0.75rem', marginTop: 24 }}>
-          Powered by <a href="/" style={{ color: '#00e5a0', textDecoration: 'none', fontWeight: 600 }}>FollowBiz</a>
+        <div style={{ textAlign: 'center', color: 'var(--muted)', fontSize: '0.75rem', marginTop: 24 }}>
+          Powered by <a href="/" style={{ color: '#f97316', textDecoration: 'none', fontWeight: 600 }}>FollowBiz</a>
         </div>
       </div>
     </div>

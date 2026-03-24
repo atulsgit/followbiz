@@ -32,6 +32,12 @@ export default function AuthPage() {
 
         // 2. Create business record
         if (data.user) {
+          const slug = businessName
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '') +
+            '-' + Math.random().toString(36).slice(2, 6)
+
           const { error: bizError } = await supabase
             .from('businesses')
             .insert({
@@ -40,6 +46,7 @@ export default function AuthPage() {
               email: email,
               business_type: businessType,
               plan: 'starter',
+              slug,
             })
           if (bizError) throw bizError
         }
@@ -224,7 +231,7 @@ if (plan === 'growth' || plan === 'pro') {
 const styles = {
   page: {
     minHeight: '100vh',
-    background: '#0a0a0f',
+    background: 'var(--bg)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -238,7 +245,7 @@ const styles = {
     width: '500px',
     height: '500px',
     borderRadius: '50%',
-    background: '#7c6cff',
+    background: '#fbbf24',
     filter: 'blur(140px)',
     opacity: 0.12,
     top: '-150px',
@@ -250,7 +257,7 @@ const styles = {
     width: '400px',
     height: '400px',
     borderRadius: '50%',
-    background: '#00e5a0',
+    background: '#f97316',
     filter: 'blur(140px)',
     opacity: 0.1,
     bottom: '-100px',
@@ -258,8 +265,8 @@ const styles = {
     pointerEvents: 'none',
   },
   card: {
-    background: '#13131a',
-    border: '1px solid rgba(255,255,255,0.07)',
+    background: 'var(--surface)',
+    border: '1px solid var(--border)',
     borderRadius: '24px',
     padding: '48px 44px',
     width: '100%',
@@ -271,18 +278,18 @@ const styles = {
   logo: {
     display: 'block',
     textAlign: 'center',
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
     fontWeight: 800,
     fontSize: '1.6rem',
-    color: '#f0f0f8',
+    color: 'var(--text)',
     textDecoration: 'none',
     marginBottom: '28px',
     letterSpacing: '-0.5px',
   },
-  logoAccent: { color: '#00e5a0' },
+  logoAccent: { color: '#f97316' },
   tabs: {
     display: 'flex',
-    background: '#1c1c28',
+    background: 'var(--surface2)',
     borderRadius: '12px',
     padding: '4px',
     marginBottom: '28px',
@@ -293,7 +300,7 @@ const styles = {
     border: 'none',
     borderRadius: '9px',
     background: 'transparent',
-    color: '#8888aa',
+    color: 'var(--muted)',
     fontFamily: "'DM Sans', sans-serif",
     fontWeight: 600,
     fontSize: '0.9rem',
@@ -301,20 +308,20 @@ const styles = {
     transition: 'all 0.2s',
   },
   tabActive: {
-    background: '#0a0a0f',
-    color: '#f0f0f8',
+    background: 'var(--bg)',
+    color: 'var(--text)',
     boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
   },
   heading: {
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
     fontSize: '1.7rem',
     fontWeight: 800,
-    color: '#f0f0f8',
+    color: 'var(--text)',
     letterSpacing: '-0.5px',
     marginBottom: '8px',
   },
   subheading: {
-    color: '#8888aa',
+    color: 'var(--muted)',
     fontSize: '0.9rem',
     marginBottom: '28px',
     lineHeight: 1.5,
@@ -329,9 +336,9 @@ const styles = {
     marginBottom: '20px',
   },
   successBox: {
-    background: 'rgba(0,229,160,0.1)',
-    border: '1px solid rgba(0,229,160,0.25)',
-    color: '#00e5a0',
+    background: 'rgba(249,115,22,0.1)',
+    border: '1px solid rgba(249,115,22,0.25)',
+    color: '#f97316',
     borderRadius: '10px',
     padding: '12px 16px',
     fontSize: '0.85rem',
@@ -348,15 +355,15 @@ const styles = {
     gap: '8px',
   },
   label: {
-    color: '#f0f0f8',
+    color: 'var(--text)',
     fontSize: '0.85rem',
     fontWeight: 600,
   },
   input: {
-    background: '#1c1c28',
-    border: '1px solid rgba(255,255,255,0.07)',
+    background: 'var(--surface2)',
+    border: '1px solid var(--border)',
     borderRadius: '12px',
-    color: '#f0f0f8',
+    color: 'var(--text)',
     padding: '13px 16px',
     fontSize: '0.95rem',
     fontFamily: "'DM Sans', sans-serif",
@@ -366,7 +373,7 @@ const styles = {
     boxSizing: 'border-box',
   },
   btnPrimary: {
-    background: '#00e5a0',
+    background: '#f97316',
     color: '#000',
     border: 'none',
     borderRadius: '12px',
@@ -384,14 +391,14 @@ const styles = {
   },
   switchText: {
     textAlign: 'center',
-    color: '#8888aa',
+    color: 'var(--muted)',
     fontSize: '0.85rem',
     marginTop: '20px',
   },
   switchLink: {
     background: 'none',
     border: 'none',
-    color: '#00e5a0',
+    color: '#f97316',
     fontWeight: 600,
     cursor: 'pointer',
     fontSize: '0.85rem',
@@ -400,12 +407,12 @@ const styles = {
   },
   terms: {
     textAlign: 'center',
-    color: '#8888aa',
+    color: 'var(--muted)',
     fontSize: '0.75rem',
     marginTop: '12px',
   },
   termsLink: {
-    color: '#8888aa',
+    color: 'var(--muted)',
     textDecoration: 'underline',
   },
 }

@@ -2,13 +2,36 @@
   --bg: #0a0a0f;
   --surface: #13131a;
   --surface2: #1c1c28;
-  --accent: #00e5a0;
-  --accent2: #7c6cff;
+  --accent: #f97316;
+  --accent2: #fbbf24;
   --text: #f0f0f8;
   --muted: #8888aa;
   --border: rgba(255, 255, 255, 0.07);
-  --font-display: var(--font-syne);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --bg-translucent: rgba(10, 10, 15, 0.85);
+  --surface-hover: rgba(255, 255, 255, 0.02);
+  --spinner-border: rgba(255, 255, 255, 0.1);
+  --font-display: var(--font-display);
   --font-body: var(--font-dm-sans);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #eeeef2;
+    --accent: #f97316;
+    --accent2: #fbbf24;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    --border-medium: rgba(0, 0, 0, 0.12);
+    --bg-translucent: rgba(245, 245, 247, 0.85);
+    --surface-hover: rgba(0, 0, 0, 0.02);
+    --spinner-border: rgba(0, 0, 0, 0.1);
+  }
 }
 
 * {
@@ -27,15 +50,29 @@ body {
   font-family: var(--font-body), 'DM Sans', sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+input, select, textarea {
+  font-family: var(--font-body), 'DM Sans', sans-serif;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   border-color: rgba(0, 229, 160, 0.4) !important;
+  outline: none;
 }
 
-input::placeholder {
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
   color: var(--muted);
 }
 

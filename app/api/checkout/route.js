@@ -21,8 +21,17 @@ export async function POST(req) {
       .single()
 
     if (business?.stripe_customer_id) {
-      stripeCustomerId = business.stripe_customer_id
-    } else {
+      // Verify the customer exists in the current Stripe mode
+      try {
+        await stripe.customers.retrieve(business.stripe_customer_id)
+        stripeCustomerId = business.stripe_customer_id
+      } catch {
+        // Customer doesn't exist in this mode (e.g. live vs test), create a new one
+        stripeCustomerId = null
+      }
+    }
+
+    if (!stripeCustomerId) {
       const customer = await stripe.customers.create({
         email,
         name: businessName,
@@ -30,7 +39,6 @@ export async function POST(req) {
       })
       stripeCustomerId = customer.id
 
-      // Save to database
       await supabase
         .from('businesses')
         .update({ stripe_customer_id: stripeCustomerId })
@@ -57,12 +65,11 @@ export async function POST(req) {
   mode: 'subscription',
   payment_method_types: ['card'],
   line_items: [{ price: priceId, quantity: 1 }],
-  discounts: [{ coupon: process.env.STRIPE_LAUNCH_COUPON }],
   success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?success=true`,
   cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
-  metadata: { userId },                    // ← Add here on session
+  metadata: { userId },
   subscription_data: {
-    metadata: { userId },                  // ← Keep here too
+    metadata: { userId },
   },
 })
 

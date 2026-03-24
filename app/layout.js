@@ -1,10 +1,10 @@
-import { Syne, DM_Sans } from 'next/font/google'
+import { Plus_Jakarta_Sans, DM_Sans } from 'next/font/google'
 import './globals.css'
 
-const syne = Syne({
+const jakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-display',
 })
 
 const dmSans = DM_Sans({
@@ -21,7 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${dmSans.variable}`}>
+      <body className={`${jakartaSans.variable} ${dmSans.variable}`}>
         {children}
       </body>
     </html>

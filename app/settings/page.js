@@ -159,15 +159,21 @@ const handleSave = async (e) => {
   }
 
   return (
-    <div style={s.page}>
+    <div className="settings-layout" style={s.page}>
       {toast && (
         <div style={{ ...s.toast, ...(toast.type === 'error' ? s.toastError : s.toastSuccess) }}>
           {toast.type === 'success' ? '✓ ' : '✕ '}{toast.msg}
         </div>
       )}
 
+      {/* Mobile topbar */}
+      <div className="mobile-topbar">
+        <a href="/" style={s.logo}>Follow<span style={s.logoAccent}>Biz</span></a>
+        <a href="/dashboard" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: '0.85rem' }}>← Dashboard</a>
+      </div>
+
       {/* Sidebar */}
-      <aside style={s.sidebar}>
+      <aside className="settings-sidebar" style={s.sidebar}>
         <a href="/" style={s.logo}>Follow<span style={s.logoAccent}>Biz</span></a>
         <nav style={s.nav}>
           <a href="/dashboard" style={{ ...s.navItem, textDecoration: 'none' }}><span>📊</span> Dashboard</a>
@@ -191,7 +197,7 @@ const handleSave = async (e) => {
       </aside>
 
       {/* Main */}
-      <main style={s.main}>
+      <main className="settings-main" style={s.main}>
         <div style={s.header}>
           <h1 style={s.pageTitle}>Settings</h1>
           <p style={s.pageSubtitle}>Manage your business profile and account</p>
@@ -202,7 +208,7 @@ const handleSave = async (e) => {
           <h2 style={s.sectionTitle}>Business Profile</h2>
           <p style={s.sectionDesc}>This information is used in your follow-up emails to customers.</p>
           <form onSubmit={handleSave} style={s.form}>
-            <div style={s.formGrid}>
+            <div className="settings-form-grid" style={s.formGrid}>
               <div style={s.field}>
                 <label style={s.label}>Business Name *</label>
                 <input style={s.input} value={form.name}
@@ -283,7 +289,7 @@ const handleSave = async (e) => {
           <h2 style={s.sectionTitle}>Change Password</h2>
           <p style={s.sectionDesc}>Choose a strong password of at least 8 characters.</p>
           <form onSubmit={handlePasswordChange} style={s.form}>
-            <div style={s.formGrid}>
+            <div className="settings-form-grid" style={s.formGrid}>
               <div style={s.field}>
                 <label style={s.label}>New Password</label>
                 <input style={s.input} type="password"
@@ -373,13 +379,13 @@ const handleSave = async (e) => {
 }
 
 const s = {
-  page: { display: 'flex', minHeight: '100vh', background: 'var(--bg)', fontFamily: "'DM Sans', sans-serif" },
+  page: { background: 'var(--bg)', fontFamily: "'DM Sans', sans-serif" },
   loadingPage: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)' },
   spinner: { width: 36, height: 36, border: '3px solid var(--spinner-border)', borderTop: '3px solid #f97316', borderRadius: '50%' },
   toast: { position: 'fixed', top: 24, right: 24, padding: '14px 20px', borderRadius: 12, fontWeight: 600, fontSize: '0.9rem', zIndex: 1000, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' },
   toastSuccess: { background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)', color: '#f97316' },
   toastError: { background: 'rgba(255,80,80,0.15)', border: '1px solid rgba(255,80,80,0.3)', color: '#ff8080' },
-  sidebar: { width: 240, background: 'var(--surface)', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', padding: '28px 16px', position: 'sticky', top: 0, height: '100vh', flexShrink: 0 },
+  sidebar: { background: 'var(--surface)', borderRight: '1px solid var(--border)', flexDirection: 'column', padding: '28px 16px', position: 'sticky', top: 0, height: '100vh' },
   logo: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.4rem', color: 'var(--text)', textDecoration: 'none', letterSpacing: '-0.5px', paddingLeft: 12, marginBottom: 36, display: 'block' },
   logoAccent: { color: '#f97316' },
   nav: { display: 'flex', flexDirection: 'column', gap: 4, flex: 1 },
@@ -391,7 +397,7 @@ const s = {
   bizName: { color: 'var(--text)', fontSize: '0.85rem', fontWeight: 600 },
   bizPlan: { color: 'var(--muted)', fontSize: '0.75rem', textTransform: 'capitalize' },
   logoutBtn: { width: '100%', background: 'transparent', border: '1px solid var(--border)', color: 'var(--muted)', borderRadius: 10, padding: '9px', fontSize: '0.85rem', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" },
-  main: { flex: 1, padding: '36px 40px', overflowY: 'auto', maxWidth: 800 },
+  main: {},
   header: { marginBottom: 36 },
   pageTitle: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.8rem', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px' },
   pageSubtitle: { color: 'var(--muted)', fontSize: '0.9rem', marginTop: 4 },
@@ -400,13 +406,14 @@ const s = {
   sectionTitle: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text)', marginBottom: 6 },
   sectionDesc: { color: 'var(--muted)', fontSize: '0.88rem', marginBottom: 24 },
   form: {},
-  formGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 },
+  formGrid: {},
   field: { display: 'flex', flexDirection: 'column', gap: 7 },
   label: { color: 'var(--text)', fontSize: '0.82rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 },
   importantBadge: { background: 'rgba(255,209,102,0.15)', border: '1px solid rgba(255,209,102,0.3)', color: '#ffd166', padding: '2px 8px', borderRadius: 100, fontSize: '0.7rem', fontWeight: 700 },
   input: { background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text)', padding: '11px 14px', fontSize: '0.9rem', fontFamily: "'DM Sans', sans-serif", outline: 'none', width: '100%', boxSizing: 'border-box' },
   inputDisabled: { opacity: 0.5, cursor: 'not-allowed' },
   fieldHint: { color: 'var(--muted)', fontSize: '0.75rem', lineHeight: 1.5 },
+  hint: { color: 'var(--muted)', fontSize: '0.75rem', lineHeight: 1.5 },
   formActions: { display: 'flex', gap: 12, marginTop: 20 },
   btnPrimary: { background: '#f97316', color: '#000', border: 'none', borderRadius: 10, padding: '11px 22px', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', display: 'inline-flex', alignItems: 'center' },
   btnSecondary: { background: 'transparent', color: 'var(--text)', border: '1px solid var(--border-medium)', borderRadius: 10, padding: '11px 22px', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" },

@@ -151,15 +151,24 @@ function DashboardContent() {
   }
 
   return (
-    <div style={s.page}>
+    <div className="dashboard-layout" style={{ background: 'var(--bg)', fontFamily: "'DM Sans', sans-serif" }}>
       {toast && (
         <div style={{ ...s.toast, ...(toast.type === 'error' ? s.toastError : s.toastSuccess) }}>
           {toast.type === 'success' ? '✓ ' : '✕ '}{toast.msg}
         </div>
       )}
 
+      {/* Mobile top bar */}
+      <div className="mobile-topbar">
+        <a href="/" style={s.logo}>Follow<span style={s.logoAccent}>Biz</span></a>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <button style={s.btnPrimary} onClick={() => setShowAddForm(true)}>+ Add</button>
+          <button onClick={handleLogout} style={{ ...s.logoutBtn, padding: '8px 14px' }}>Log out</button>
+        </div>
+      </div>
+
       {/* Sidebar */}
-      <aside style={s.sidebar}>
+      <aside className="dashboard-sidebar" style={s.sidebar}>
         <a href="/" style={s.logo}>Follow<span style={s.logoAccent}>Biz</span></a>
 
         <nav style={s.nav}>
@@ -214,7 +223,7 @@ function DashboardContent() {
       </aside>
 
       {/* Main */}
-      <main style={s.main}>
+      <main className="dashboard-main" style={{ overflowY: 'auto' }}>
         <div style={s.header}>
           <div>
             <h1 style={s.pageTitle}>Dashboard</h1>
@@ -226,7 +235,7 @@ function DashboardContent() {
         </div>
 
         {/* Stats */}
-        <div style={s.statsGrid}>
+        <div className="stats-grid">
           <div style={s.statCard}>
             <div style={s.statLabel}>Total Customers</div>
             <div style={s.statValue}>{totalCustomers}</div>
@@ -256,7 +265,7 @@ function DashboardContent() {
           <div style={s.formCard}>
             <h2 style={s.formTitle}>Add New Customer</h2>
             <form onSubmit={handleAddCustomer} style={s.form}>
-              <div style={s.formGrid}>
+              <div className="form-grid">
                 <div style={s.field}>
                   <label style={s.label}>Full Name *</label>
                   <input style={s.input} value={newCustomer.name}
@@ -415,7 +424,7 @@ const s = {
   toast: { position: 'fixed', top: 24, right: 24, padding: '14px 20px', borderRadius: 12, fontWeight: 600, fontSize: '0.9rem', zIndex: 1000, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' },
   toastSuccess: { background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)', color: '#f97316' },
   toastError: { background: 'rgba(255,80,80,0.15)', border: '1px solid rgba(255,80,80,0.3)', color: '#ff8080' },
-  sidebar: { width: 240, background: 'var(--surface)', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', padding: '28px 16px', position: 'sticky', top: 0, height: '100vh', flexShrink: 0 },
+  sidebar: { width: 240, background: 'var(--surface)', borderRight: '1px solid var(--border)', flexDirection: 'column', padding: '28px 16px', position: 'sticky', top: 0, height: '100vh', flexShrink: 0 },
   logo: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.4rem', color: 'var(--text)', textDecoration: 'none', letterSpacing: '-0.5px', paddingLeft: 12, marginBottom: 36, display: 'block' },
   logoAccent: { color: '#f97316' },
   nav: { display: 'flex', flexDirection: 'column', gap: 4, flex: 1 },

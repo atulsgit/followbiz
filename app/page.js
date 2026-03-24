@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
 export default function LandingPage() {
   const observerRef = useRef(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -35,20 +36,29 @@ export default function LandingPage() {
       <div style={s.orb1} />
       <div style={s.orb2} />
 
-
       {/* NAV */}
       <nav style={s.nav}>
         <div style={s.navInner}>
           <a href="/" style={s.logo}>Follow<span style={s.logoAccent}>Biz</span></a>
-          <div style={s.navLinks}>
+          <div className="landing-nav-links">
             <a href="#how" style={s.navLink}>How it works</a>
             <a href="#features" style={s.navLink}>Features</a>
             <a href="#pricing" style={s.navLink}>Pricing</a>
           </div>
-          <div style={s.navCtas}>
+          <div className="landing-nav-ctas">
             <Link href="/auth" style={s.btnNavGhost}>Log in</Link>
             <Link href="/auth" style={s.btnNavPrimary}>Start Free Trial →</Link>
           </div>
+          <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+            <span /><span /><span />
+          </button>
+        </div>
+        <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
+          <a href="#how" onClick={() => setMenuOpen(false)}>How it works</a>
+          <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
+          <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
+          <Link href="/auth" onClick={() => setMenuOpen(false)}>Log in</Link>
+          <Link href="/auth" style={{ color: '#f97316', fontWeight: 700 }} onClick={() => setMenuOpen(false)}>Start Free Trial →</Link>
         </div>
       </nav>
 
@@ -86,7 +96,7 @@ export default function LandingPage() {
               <span style={s.previewUrl}>followbiz.app/dashboard</span>
             </div>
             <div style={s.previewContent}>
-              <div style={s.previewStats}>
+              <div className="preview-stats-grid">
                 {[
                   { label: 'Reviews This Month', value: '47', change: '↑ 23 vs last month', color: '#f97316' },
                   { label: 'Follow-ups Sent', value: '128', change: '94% open rate', color: '#fbbf24' },
@@ -142,7 +152,7 @@ export default function LandingPage() {
 
       {/* PROBLEM */}
       <section style={s.problem} id="how">
-        <div style={s.problemInner}>
+        <div className="problem-grid">
           <div style={s.problemLeft}>
             <p style={s.sectionLabel} className="reveal">The Problem</p>
             <h2 style={s.sectionTitle} className="reveal">
@@ -349,7 +359,7 @@ const s = {
   dot: { width: 10, height: 10, borderRadius: '50%' },
   previewUrl: { color: 'var(--muted)', fontSize: '0.78rem', marginLeft: 8 },
   previewContent: { padding: 24 },
-  previewStats: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 16 },
+  previewStats: {},
   previewStat: { background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 },
   previewStatLabel: { color: 'var(--muted)', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 6 },
   previewStatValue: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.8rem', fontWeight: 800 },
@@ -364,7 +374,7 @@ const s = {
   bizTypes: { display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' },
   bizType: { display: 'flex', alignItems: 'center', gap: 10, color: 'var(--muted)', fontSize: '0.9rem', fontWeight: 500, padding: '10px 20px', border: '1px solid var(--border)', borderRadius: 100 },
   problem: { padding: '100px 24px', position: 'relative', zIndex: 1 },
-  problemInner: { maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' },
+  problemInner: {},
   problemLeft: {},
   problemRight: { display: 'flex', flexDirection: 'column', gap: 20 },
   sectionLabel: { color: '#f97316', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 16 },

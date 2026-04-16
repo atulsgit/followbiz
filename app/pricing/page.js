@@ -94,11 +94,30 @@ function PricingContent() {
     return 'subscribe'
   }
 
-  const handleCheckout = async (plan) => {
+  const handlePlanClick = async (plan) => {
     if (!user) { window.location.href = '/auth'; return }
+    const action = getPlanAction(plan.key)
     setCheckoutLoading(plan.key)
     setError('')
 
+    // Already subscribed — use billing portal to upgrade/downgrade
+    if ((action === 'upgrade' || action === 'downgrade') && business?.stripe_customer_id) {
+      const res = await fetch('/api/billing-portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customerId: business.stripe_customer_id }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setError(data.error || 'Could not open billing portal. Please try again.')
+        setCheckoutLoading(null)
+      }
+      return
+    }
+
+    // New subscription — go through Stripe Checkout
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -125,7 +144,7 @@ function PricingContent() {
     switch (action) {
       case 'current':   return '✓ Your Current Plan'
       case 'upgrade':   return `Upgrade to ${planKey.charAt(0).toUpperCase() + planKey.slice(1)} →`
-      case 'downgrade': return `Downgrade to ${planKey.charAt(0).toUpperCase() + planKey.slice(1)}`
+      case 'downgrade': return `Downgrade to ${planKey.charAt(0).toUpperCase() + planKey.slice(1)} →`
       case 'subscribe': return `Get Started →`
       default:          return 'Get Started →'
     }
@@ -240,7 +259,7 @@ function PricingContent() {
                     ...(isCurrent ? s.btnCurrent : plan.featured ? s.btnFeatured : s.btnOutline),
                     ...(isDisabled ? s.btnDisabled : {}),
                   }}
-                  onClick={() => !isCurrent && handleCheckout(plan)}
+                  onClick={() => !isCurrent && handlePlanClick(plan)}
                   disabled={isDisabled}
                 >
                   {getButtonLabel(plan.key)}

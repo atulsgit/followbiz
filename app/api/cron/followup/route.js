@@ -175,7 +175,7 @@ async function sendRebookEmail(customer, businessName, reviewUrl, websiteUrl, co
     : `Come back this month and mention this email — we've got an exclusive returning customer offer waiting for you. 🎁`
 
   await resend.emails.send({
-    from: 'onboarding@resend.dev',
+    from: 'Followbiz <contact@followbiz.com>',
     to: customer.email,
     subject,
     html: `

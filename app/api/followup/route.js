@@ -28,7 +28,7 @@ export async function POST(req) {
 
     // Send follow-up email
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'Followbiz <contact@followbiz.com>',
       to: customerEmail,
       subject: `Thanks for visiting ${businessName}! 🌟`,
       html: `

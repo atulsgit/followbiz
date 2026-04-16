@@ -79,7 +79,7 @@ const { data: business } = await supabase
 const plan = business?.plan
 
 // Redirect based on plan
-if (plan === 'growth' || plan === 'pro') {
+if (plan && plan !== 'inactive' && plan !== 'cancelled') {
   router.push('/dashboard')
 } else {
   router.push('/pricing')

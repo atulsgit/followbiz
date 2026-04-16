@@ -60,7 +60,7 @@ export async function POST(req) {
       
     // Send follow-up email immediately
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'Followbiz <contact@followbiz.com>',
       to: email,
       subject: `Thanks for visiting ${businessName}! 🌟`,
       html: `

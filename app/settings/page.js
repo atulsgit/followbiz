@@ -86,12 +86,6 @@ const handleSave = async (e) => {
   e.preventDefault()
   setSaving(true)
 
-  // Generate slug from business name
-  const slug = form.name
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-
   const { error } = await supabase
     .from('businesses')
     .update({
@@ -99,13 +93,14 @@ const handleSave = async (e) => {
       phone: form.phone,
       business_type: form.business_type,
       google_review_url: form.google_review_url,
-      slug: slug,
+      website_url: form.website_url,
+      contact_phone: form.contact_phone,
     })
     .eq('id', business.id)
 
   if (!error) {
     showToast('Settings saved successfully!')
-    setBusiness({ ...business, ...form, slug })
+    setBusiness({ ...business, ...form })
   } else {
     showToast(error.message, 'error')
   }

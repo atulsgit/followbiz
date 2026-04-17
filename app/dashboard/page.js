@@ -178,12 +178,9 @@ function DashboardContent() {
           <div style={s.navItem} onClick={() => setShowAddForm(true)}>
             <span>➕</span> Add Customer
           </div>
-          <div style={s.navItem}>
-            <span>📧</span> Email Logs
-          </div>
-          <div style={s.navItem}>
+          <a href="/settings" style={{ ...s.navItem, textDecoration: 'none' }}>
             <span>⚙️</span> Settings
-          </div>
+          </a>
           <a href="/pricing" style={{ ...s.navItem, textDecoration: 'none' }}>
             <span>⭐</span> Change Plan
           </a>

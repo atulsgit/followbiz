@@ -131,7 +131,18 @@ case 'checkout.session.completed': {
       const sub = event.data.object
       const priceId = sub.items.data[0].price.id
       const planName = PLAN_MAP[priceId] || 'starter'
-      const userId = sub.metadata?.userId
+
+      let userId = sub.metadata?.userId
+
+      if (!userId) {
+        const { data: biz } = await supabase
+          .from('businesses')
+          .select('user_id')
+          .eq('stripe_customer_id', sub.customer)
+          .single()
+        userId = biz?.user_id
+      }
+
       if (!userId) break
 
       await supabase
